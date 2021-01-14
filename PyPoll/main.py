@@ -3,6 +3,7 @@ import csv
 
 # import file
 pypoll_csv = os.path.join("/Users/valerie/Desktop/DA_VA/homework/3_Python/python-challenge/PyPoll/Resources/election_data.csv")
+pypoll_text = os.path.join("/Users/valerie/Desktop/DA_VA/homework/3_Python/python-challenge/PyPoll/Analysis/election_analysis.txt")
 
 # open and read csv file
 with open(pypoll_csv, 'r') as  csv_file:
@@ -42,20 +43,38 @@ with open(pypoll_csv, 'r') as  csv_file:
             otooley_votes.append(row[0])
             otooley = len(otooley_votes)
             
-    khan_percentage = round((khan/row_count)*100,3)
-    correy_percentage = round((correy/row_count)*100,3)
-    li_percentage = round((li/row_count)*100,2)
-    otooley_percentage = round((otooley/row_count)*100,3)
+    khan_per = (khan/row_count) *100
+    correy_per = (correy/row_count) *100
+    li_per = (li/row_count) *100
+    otooley_per = (otooley/row_count) *100
 
-    # print out the election results
-    print("Election Results")
-    print("----------------------------------")
-    print(f"Total Votes: {row_count}")
-    print("----------------------------------") 
-    print(f"Khan: {khan_percentage}% ({khan})")
-    print(f"Correy: {correy_percentage}% ({correy})")
-    print(f"Li: {li_percentage}% ({li})")
-    print(f"O'Tooley: {otooley_percentage}% ({otooley})")
-    print("----------------------------------")
-    print(f"Winner: {variable}")
-    print("----------------------------------")
+    if (khan_per > correy_per) and (khan_per > li_per) and (khan_per > otooley_per):
+        winner = "Khan"
+    elif (correy_per > khan_per) and (correy_per > pct_Li) and (correy_per > pct_OTooley):
+        winner = "Correy"
+    elif (li_per > correy_per) and (li_per > khan_per) and (li_per > otooley_per):
+        winner = "Li"
+    elif (otooley_per > correy_per) and (otooley_per > pct_Khan) and (otooley_per > li_per ):
+        winner = "O'Tooley"
+
+    # define function for printing results
+results = (
+    f"Election Results\n"
+    f"----------------------------------\n"
+    f"Total Votes: {row_count}\n"
+    f"----------------------------------\n"
+    f"Khan: {round(khan_per, 3)}% ({khan})\n"
+    f"Correy: {round(correy_per, 3)}% ({correy})\n"
+    f"Li: {round(li_per, 3)}% ({li})\n"
+    f"O'Tooley: {round(otooley_per, 3)}% ({otooley})\n"
+    f"----------------------------------\n"
+    f"Winner: {winner}\n"
+    f"----------------------------------\n"
+)
+
+# print results in terminal
+print(results)
+
+# export results to new text file
+with open(pypoll_text, "w") as text_file:
+    text_file.write(results)
