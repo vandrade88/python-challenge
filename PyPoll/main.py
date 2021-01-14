@@ -59,7 +59,7 @@ with open(pypoll_csv, 'r') as  csv_file:
 
     # define function for printing results
 results = (
-    f"Election Results\n"
+    f"\nElection Results\n"
     f"----------------------------------\n"
     f"Total Votes: {row_count}\n"
     f"----------------------------------\n"
