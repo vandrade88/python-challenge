@@ -42,12 +42,15 @@ with open(pypoll_csv, 'r') as  csv_file:
         elif (row[2]) == "O'Tooley":
             otooley_votes.append(row[0])
             otooley = len(otooley_votes)
-            
-    khan_per = (khan/row_count) *100
-    correy_per = (correy/row_count) *100
-    li_per = (li/row_count) *100
-    otooley_per = (otooley/row_count) *100
 
+    # calculate percentages using candidate's new list / total votes        
+    khan_per = (khan/row_count) * 100
+    correy_per = (correy/row_count) * 100
+    li_per = (li/row_count) * 100
+    otooley_per = (otooley/row_count) * 100
+
+    # use conditional to determine which candidate's list of votes is greatest
+    # this determines overall winner
     if (khan_per > correy_per) and (khan_per > li_per) and (khan_per > otooley_per):
         winner = "Khan"
     elif (correy_per > khan_per) and (correy_per > pct_Li) and (correy_per > pct_OTooley):
@@ -57,7 +60,7 @@ with open(pypoll_csv, 'r') as  csv_file:
     elif (otooley_per > correy_per) and (otooley_per > pct_Khan) and (otooley_per > li_per ):
         winner = "O'Tooley"
 
-    # define function for printing results
+# define function for printing results
 results = (
     f"\nElection Results\n"
     f"----------------------------------\n"
@@ -72,7 +75,7 @@ results = (
     f"----------------------------------\n"
 )
 
-# print results in terminal
+# print results to screen or terminal
 print(results)
 
 # export results to new text file
