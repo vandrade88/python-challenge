@@ -6,7 +6,7 @@ pybank_csv = os.path.join("/Users/valerie/Desktop/DA_VA/homework/3_Python/python
 
 # open and read csv file
 with open(pybank_csv, 'r') as  csv_file:
-    csv_reader = csv.reader(csv_file, delimiter =',')
+    csv_reader = csv.reader(csv_file)
     csv_header = next(csv_file)
     
 # define variables
@@ -34,9 +34,11 @@ with open(pybank_csv, 'r') as  csv_file:
         monthly_change = int(row[1]) - last_month
 
         # max and min functions    
+        max_date = row[0]
+        min_date = row[0]
         largest_increase = max(largest_increase, monthly_change)
         largest_decrease = min(largest_decrease, monthly_change)
-        
+
         # reset previous row's value for next loop
         last_month = int(row[1])
 
@@ -46,5 +48,5 @@ with open(pybank_csv, 'r') as  csv_file:
     print(f"Total Months: {row_count}")
     print(f"Total: ${total_amount}")
     print(f"Average Change: ${round(average,2)}")
-    print(f"Greatest Increase in Profits: ${largest_increase}")
-    print(f"Greatest Decrease in Profits: ${largest_decrease}")
+    print(f"Greatest Increase in Profits: {max_date} (${largest_increase})")
+    print(f"Greatest Decrease in Profits: {min_date} (${largest_decrease})")
