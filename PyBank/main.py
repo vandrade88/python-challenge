@@ -15,9 +15,8 @@ with open(pybank_csv, 'r') as  csv_file:
     total_amount = 0
     total_change = 0
     last_month = 0
-    largest_increase = 0
-    largest_decrease = 0
-    monthly_change = 0
+    largest_increase = ['', 0]
+    largest_decrease = ['', 0]
     
     # loop through rows starting with conditional to solve header issue
     for row in csv_reader:
@@ -31,14 +30,17 @@ with open(pybank_csv, 'r') as  csv_file:
         # total amount of profits/losses in column b
         total_amount += int(row[1])
         
-        # calculates the difference between current and previous value
+        # calculate the difference between current and previous month's value
         monthly_change = int(row[1]) - last_month
 
-        # max and min functions    
-        max_date = row[0]
-        min_date = row[0]
-        largest_increase = max(largest_increase, monthly_change)
-        largest_decrease = min(largest_decrease, monthly_change)
+        # conditional to find the largest increase and decrease + determine the corresponding date
+        if monthly_change > largest_increase[1]:
+            largest_increase[1] = monthly_change
+            largest_increase[0] = row[0]
+        
+        if monthly_change < largest_decrease[1]:
+            largest_decrease[1] = monthly_change
+            largest_decrease[0] = row[0]
 
         # reset previous row's value for next loop
         last_month = int(row[1])
@@ -50,8 +52,8 @@ results = (
     f"Total Months: {row_count}\n"
     f"Total: ${total_amount}\n"
     f"Average Change: ${round(average,2)}\n"
-    f"Greatest Increase in Profits: {max_date} (${largest_increase})\n"
-    f"Greatest Decrease in Profits: {min_date} (${largest_decrease})\n"
+    f"Greatest Increase in Profits: {largest_increase[0]} (${largest_increase[1]})\n"
+    f"Greatest Decrease in Profits: {largest_decrease[0]} (${largest_decrease[1]})\n"
 )
 
 # print results in terminal
